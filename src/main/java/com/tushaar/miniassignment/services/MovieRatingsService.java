@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.tushaar.miniassignment.exceptions.MovieRatingNotFoundException;
-import com.tushaar.miniassignment.filters.ResponseTimeFilter;
 import com.tushaar.miniassignment.models.MovieRating;
 import com.tushaar.miniassignment.repository.MovieRatingRepository;
 import com.tushaar.miniassignment.utilities.Utilities;
@@ -42,6 +41,7 @@ public class MovieRatingsService {
 		LOGGER.info("Save MovieRating to database " + this.getClass().getName());
 		try {
 			MovieRating r = repository.save(rating);
+			new Utilities().insertRecordInFile(r);
 			return new ResponseEntity<>(r, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>("An error occured", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -78,6 +78,18 @@ public class MovieRatingsService {
 			MovieRating r = repository.deleteById(id);
 			return new ResponseEntity<>(r, HttpStatus.OK);
 		} catch (MovieRatingNotFoundException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<>("An error occured", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	public ResponseEntity<?> updateById(String id, MovieRating rating) {
+		LOGGER.info("Update a specific MovieRating from database using given ID " + this.getClass().getName());
+		try {
+			String res = repository.updateById(id, rating);
+			return new ResponseEntity<>("Record updated", HttpStatus.OK);
+		}catch (MovieRatingNotFoundException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
 			return new ResponseEntity<>("An error occured", HttpStatus.INTERNAL_SERVER_ERROR);

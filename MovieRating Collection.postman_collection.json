@@ -1,0 +1,236 @@
+{
+	"info": {
+		"_postman_id": "6a338b33-a551-46d0-8571-8c03d58e7198",
+		"name": "MovieRating Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10748765"
+	},
+	"item": [
+		{
+			"name": "Get All Ratings",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "token",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"imdb_title_id\": \"3qedew\",\r\n    \"title\": \"ThirdHighest\",\r\n    \"director\": \"A\",\r\n    \"year\": 2000,\r\n    \"reviews_from_users\": 6,\r\n    \"country\": \"India\",\r\n    \"budget\": \"Rs20\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/ratings/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ratings",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a MovieRating",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "token",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"imdb_title_id\": \"3qedew\",\r\n    \"title\": \"ThirdHighest\",\r\n    \"director\": \"A\",\r\n    \"year\": 2000,\r\n    \"reviews_from_users\": 6,\r\n    \"country\": \"India\",\r\n    \"budget\": \"Rs20\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/ratings/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ratings",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a particular rating",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "token",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/ratings/0988e464-ee12-4a5e-9f71-ac238763865a",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ratings",
+						"0988e464-ee12-4a5e-9f71-ac238763865a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a rating",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "token",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/ratings/0988e464-ee12-4a5e-9f71-ac238763865a",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ratings",
+						"0988e464-ee12-4a5e-9f71-ac238763865a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a rating by Director and year range",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "token",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/ratings/query1?director=A&start=1999&end=2008",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ratings",
+						"query1"
+					],
+					"query": [
+						{
+							"key": "director",
+							"value": "A"
+						},
+						{
+							"key": "start",
+							"value": "1999"
+						},
+						{
+							"key": "end",
+							"value": "2008"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Movie ratings greater than given count",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "token",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/ratings/query2?review=7",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ratings",
+						"query2"
+					],
+					"query": [
+						{
+							"key": "review",
+							"value": "7"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Movie with highest budget in given year and country",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "token",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/ratings/query3?year=2002&country=India",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ratings",
+						"query3"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2002"
+						},
+						{
+							"key": "country",
+							"value": "India"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

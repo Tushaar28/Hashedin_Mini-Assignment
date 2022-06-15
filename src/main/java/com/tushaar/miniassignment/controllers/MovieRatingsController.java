@@ -1,7 +1,5 @@
 package com.tushaar.miniassignment.controllers;
 
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +8,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tushaar.miniassignment.filters.ResponseTimeFilter;
 import com.tushaar.miniassignment.models.MovieRating;
 import com.tushaar.miniassignment.services.MovieRatingsService;
 
@@ -36,7 +33,7 @@ public class MovieRatingsController {
 	 * @return ResponseEntity
 	 */
 	@PostMapping
-	public ResponseEntity<?> save(@RequestBody MovieRating rating, @RequestHeader Map<String, String> headers) {
+	public ResponseEntity<?> save(@RequestBody MovieRating rating) {
 		LOGGER.info("save MovieRating to database " + this.getClass().getName());
 		return service.save(rating);
 	}
@@ -47,7 +44,7 @@ public class MovieRatingsController {
 	 * @return ResponseEntity
 	 */
 	@GetMapping
-	public ResponseEntity<?> getAllRatings(@RequestHeader Map<String, String> headers) {
+	public ResponseEntity<?> getAllRatings() {
 		LOGGER.info("Fetch all MovieRating from database " + this.getClass().getName());
 		return service.getAllRatings();
 	}
@@ -59,7 +56,7 @@ public class MovieRatingsController {
 	 * @return ResponseEntity
 	 */
 	@GetMapping("/{id}")
-	public ResponseEntity<?> findById(@RequestHeader Map<String, String> headers, @PathVariable("id") String id) {
+	public ResponseEntity<?> findById(@PathVariable("id") String id) {
 		LOGGER.info("Fetch a sepcific MovieRating from database using given ID " + this.getClass().getName());
 		return service.findById(id);
 	}
@@ -71,9 +68,15 @@ public class MovieRatingsController {
 	 * @return ResponseEntity
 	 */
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteById(@RequestHeader Map<String, String> headers, @PathVariable("id") String id) {
+	public ResponseEntity<?> deleteById(@PathVariable("id") String id) {
 		LOGGER.info("Delete a specific MovieRating from database using given ID " + this.getClass().getName());
 		return service.deleteById(id);
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<?> updateById(@RequestBody MovieRating rating, @PathVariable("id") String id) {
+		LOGGER.info("Update a specific MovieRating from database using given ID " + this.getClass().getName());
+		return service.updateById(id, rating);
 	}
 	
 	/**

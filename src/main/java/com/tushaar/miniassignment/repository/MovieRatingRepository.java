@@ -13,8 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBSaveExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 import com.tushaar.miniassignment.exceptions.MovieRatingNotFoundException;
 import com.tushaar.miniassignment.models.MovieRating;
 
@@ -44,14 +46,17 @@ public class MovieRatingRepository {
 	}
 
 	public MovieRating deleteById(String id) {
-		
 		MovieRating rating = dynamoDBMapper.load(MovieRating.class, id);
 		if (rating == null) {
 			throw new MovieRatingNotFoundException("No Movie Rating found");
 		}
 		dynamoDBMapper.delete(rating);
-		return rating;
-		
+		return rating;	
+	}
+	
+	public String updateById(String id, MovieRating rating) {
+		dynamoDBMapper.save(rating, new DynamoDBSaveExpression().withExpectedEntry("id", new ExpectedAttributeValue(new AttributeValue().withS(id))));
+		return id;
 	}
 
 	public ResponseEntity<?> getMovieRatingByDirectorinGivenYearRange(String director, String start, String end) {
